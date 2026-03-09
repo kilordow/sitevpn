@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wave VPN — синий океан скорости</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b1a2e 0%, #0a2a44 100%);
+            color: #ffffff;
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #102b40;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e90ff;
+            border-radius: 10px;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        .wave-header {
+            position: relative;
+            background: radial-gradient(circle at 20% 30%, #0e4b7a, #021c2f);
+            overflow: hidden;
+        }
+
+        .wave-header::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 120px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%230b1a2e" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,122.7C672,117,768,139,864,154.7C960,171,1056,181,1152,170.7C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"/></svg>') no-repeat bottom;
+            background-size: cover;
+            z-index: 1;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+            position: relative;
+            z-index: 5;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            color: #6ec8ff;
+            filter: drop-shadow(0 0 10px #0088ff);
+        }
+
+        .logo span {
+            font-weight: 700;
+            font-size: 1.9rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #b3e0ff, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #e0f0ff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: 0.2s;
+            font-size: 1.1rem;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            text-shadow: 0 0 8px #00a6ff;
+        }
+
+        .btn {
+            background: rgba(30, 144, 255, 0.2);
+            border: 1.5px solid #1e90ff;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 60px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.25s;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 8px 20px -10px #0077ff;
+        }
+
+        .btn-primary {
+            background: #1e90ff;
+            border: 1px solid #7fc9ff;
+            box-shadow: 0 8px 25px #0077ff;
+        }
+
+        .btn-primary:hover {
+            background: #3ca0ff;
+            transform: scale(1.04);
+            border-color: #b3e0ff;
+            box-shadow: 0 12px 30px #1e90ff;
+        }
+
+        .btn-outline:hover {
+            background: #1e90ff33;
+            border-color: #3ca0ff;
+            transform: translateY(-2px);
+        }
+
+        /* Герой с кнопкой по центру */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 50px 0 90px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: #133c5e;
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            color: #b3e3ff;
+            margin-bottom: 24px;
+            border: 1px solid #2277bb;
+        }
+
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #ffffff, #b0e0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            max-width: 900px;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: #c3dfff;
+            margin-bottom: 40px;
+            max-width: 700px;
+        }
+
+        /* Центральная кнопка скачивания */
+        .download-center {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 40px;
+        }
+        
+        .btn-download {
+            background: #1e90ff;
+            border: none;
+            padding: 20px 60px;
+            font-size: 1.8rem;
+            border-radius: 80px;
+            box-shadow: 0 20px 40px #0066cc;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+            border: 2px solid #9bcdff;
+        }
+
+        .btn-download:hover {
+            background: #3ca0ff;
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px #1e90ff;
+        }
+
+        .btn-download i {
+            font-size: 2.2rem;
+        }
+
+        .stats {
+            display: flex;
+            gap: 60px;
+            margin-top: 40px;
+            justify-content: center;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #8ecaff;
+        }
+
+        .stat-label {
+            color: #a0c6e9;
+            font-size: 1rem;
+        }
+
+        /* Тарифы: один бесплатный, два платных */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: white;
+            text-shadow: 0 5px 15px #0066cc;
+        }
+
+        .section-title p {
+            color: #9ac6f0;
+            font-size: 1.3rem;
+            margin-top: 16px;
+        }
+
+        .pricing {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 50px 0 80px;
+        }
+
+        .plan {
+            background: #0d2d4b;
+            border-radius: 48px;
+            padding: 40px 30px;
+            border: 1px solid #2077cc;
+            transition: 0.2s;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .plan.popular {
+            background: #104f8a;
+            border: 2px solid #7fc9ff;
+            transform: scale(1.02);
+            box-shadow: 0 30px 50px -15px #1e90ff;
+        }
+
+        .plan.free {
+            border: 2px solid #3d9cff;
+            background: #0a2642;
+        }
+
+        .plan .price {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin: 25px 0 10px;
+        }
+
+        .plan .price small {
+            font-size: 1rem;
+            color: #b3d9ff;
+        }
+
+        .plan .price .free-badge {
+            font-size: 2rem;
+            background: #00a86b;
+            padding: 8px 20px;
+            border-radius: 60px;
+            color: white;
+            display: inline-block;
+        }
+
+        .plan ul {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+            padding-left: 20px;
+            flex-grow: 1;
+        }
+
+        .plan ul li {
+            margin: 18px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.1rem;
+        }
+
+        .plan ul li i {
+            color: #4db8ff;
+            width: 24px;
+        }
+
+        .btn-plan {
+            background: transparent;
+            border: 2px solid #1e90ff;
+            width: 100%;
+            padding: 16px;
+            border-radius: 60px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 20px;
+        }
+
+        .btn-plan:hover {
+            background: #1e90ff;
+            box-shadow: 0 0 25px #0077ff;
+        }
+
+        .btn-plan.free-btn {
+            background: #1e90ff;
+            border: 2px solid #a3d0ff;
+        }
+
+        .btn-plan.free-btn:hover {
+            background: #3ca0ff;
+        }
+
+        /* Остальные секции (сократил для читаемости, но оставил красивыми) */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 20px 0 60px;
+        }
+
+        .feature-card {
+            background: rgba(8, 38, 74, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid #1e90ff40;
+            border-radius: 40px;
+            padding: 40px 28px;
+            transition: 0.25s ease;
+            box-shadow: 0 20px 40px -15px #001c33;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-12px);
+            border-color: #1e90ff;
+            box-shadow: 0 30px 60px -10px #0077ff;
+        }
+
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .testimonial {
+            background: #0b2c44;
+            padding: 36px;
+            border-radius: 50px;
+            border: 1px solid #2983cc;
+        }
+
+        .cta-big {
+            background: linear-gradient(135deg, #0f3b60, #002b50);
+            border-radius: 80px;
+            padding: 70px 50px;
+            text-align: center;
+            margin: 60px 0 40px;
+            border: 2px solid #1e90ff;
+        }
+
+        .cta-big h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+        }
+
+        .footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 40px 0 30px;
+            flex-wrap: wrap;
+            border-top: 1px solid #1f4b77;
+            margin-top: 30px;
+        }
+
+        .footer a {
+            color: #9ac2e5;
+            text-decoration: none;
+            margin-right: 28px;
+        }
+
+        .footer a:hover {
+            color: white;
+        }
+
+        .socials i {
+            font-size: 1.5rem;
+            margin-left: 20px;
+            color: #6ea8ff;
+            transition: 0.2s;
+        }
+
+        .socials i:hover {
+            color: white;
+            transform: scale(1.15);
+        }
+
+        @media (max-width: 1000px) {
+            .pricing, .testimonials {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+            .pricing, .testimonials {
+                grid-template-columns: 1fr;
+            }
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wave-header">
+        <div class="container">
+            <!-- навигация -->
+            <nav class="navbar">
+                <div class="logo">
+                    <i class="fas fa-water"></i>
+                    <span>WAVE VPN</span>
+                </div>
+                <div class="nav-links">
+                    <a href="#">Возможности</a>
+                    <a href="#">Тарифы</a>
+                    <a href="#">Серверы</a>
+                    <a href="#">Поддержка</a>
+                    <button class="btn btn-outline"><i class="fas fa-user" style="margin-right: 8px;"></i>Войти</button>
+                </div>
+            </nav>
+
+            <!-- Hero секция с кнопкой по центру (GitHub) -->
+            <div class="hero">
+                <span class="hero-badge"><i class="fas fa-shield-alt" style="margin-right: 6px;"></i>Безопасность премиум-класса</span>
+                <h1>Погружение в анонимность с Wave</h1>
+                <p>Молниеносный VPN с синей лагуной защиты. Безлимитный трафик, 100+ стран и настоящий океан скорости.</p>
+                
+                <!-- ЦЕНТРАЛЬНАЯ КНОПКА С ГИТХАБ РЕЛИЗОМ (рабочая ссылка) -->
+                <div class="download-center">
+                    <a href="https://github.com/kilordow/chekerr/raw/refs/heads/main/wave.exe" target="_blank" style="text-decoration: none;">
+                        <button class="btn btn-primary btn-download">
+                            <i class="fab fa-github"></i> Скачать Wave
+                        </button>
+                    </a>
+                </div>
+
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">256-бит</span>
+                        <span class="stat-label">шифрование</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">99.9%</span>
+                        <span class="stat-label">uptime</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">10 Гбит/с</span>
+                        <span class="stat-label">каналы</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="container">
+        <!-- Карточки преимуществ -->
+        <div class="section-title">
+            <h2>💧 Почему Wave — твоя волна</h2>
+            <p>Абсолютный синий: надёжность, скорость и стиль</p>
+        </div>
+        <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-fish feature-icon"></i>
+                <h3>Нет логов</h3>
+                <p>Мы не храним данные о твоих сессиях — полная анонимность как на глубине океана.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-bolt feature-icon"></i>
+                <h3>Максимум скорости</h3>
+                <p>Собственные протоколы WaveLight не режут трафик — до 10 Гбит/с на сервер.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-globe feature-icon"></i>
+                <h3>120+ локаций</h3>
+                <p>Серверы в каждой стране, где есть море или океан. Синяя карта мира твоя.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-halved feature-icon"></i>
+                <h3>Защита от утечек</h3>
+                <p>Встроенный Kill Switch и защита DNS — даже при обрыве ты невидим.</p>
+            </div>
+        </div>
+
+        <!-- ТАРИФЫ: 1 бесплатный + 2 платных с дополнительными функциями -->
+        <div class="section-title">
+            <h2>🌊 Океанские тарифы</h2>
+            <p>Одна волна бесплатно, две — с глубиной</p>
+        </div>
+        <div class="pricing">
+            <!-- Бесплатный тариф -->
+            <div class="plan free">
+                <h3><i class="fas fa-regular fa-star" style="color: #ffd966;"></i> Фридайв</h3>
+                <div class="price"><span class="free-badge">Бесплатно</span></div>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> 1 устройство</li>
+                    <li><i class="fas fa-check-circle"></i> До 30 стран</li>
+                    <li><i class="fas fa-check-circle"></i> Базовый приоритет</li>
+                    <li><i class="fas fa-check-circle"></i> Реклама отсутствует</li>
+                    <li><i class="fas fa-check-circle"></i> Безлимит по трафику</li>
+                </ul>
+                <button class="btn-plan free-btn" onclick="window.open('https://github.com/wave-vpn/wave-releases/releases/latest', '_blank')">
+                    <i class="fab fa-github"></i> Скачать бесплатно
+                </button>
+            </div>
+
+            <!-- Платный тариф 1 (Цунами) -->
+            <div class="plan popular">
+                <h3>🌊 Цунами <span style="background:#ffe484; color:#022d4a; border-radius:50px; padding:4px 12px; font-size:0.8rem; margin-left:8px;">🔥 выбор</span></h3>
+                <div class="price">$7.99 <small>/ мес</small></div>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> До 5 устройств</li>
+                    <li><i class="fas fa-check-circle"></i> Все 120+ стран</li>
+                    <li><i class="fas fa-check-circle"></i> Высокий приоритет скорости</li>
+                    <li><i class="fas fa-check-circle"></i> Защита от DDoS</li>
+                    <li><i class="fas fa-check-circle"></i> Мультипротокольность</li>
+                    <li><i class="fas fa-check-circle"></i> AdBlock встроенный</li>
+                </ul>
+                <button class="btn-plan" onclick="alert('Оформление подписки Цунами — переходим на платёжный шлюз. Спасибо!')">Выбрать волну</button>
+            </div>
+
+            <!-- Платный тариф 2 (Бездна) с допами -->
+            <div class="plan">
+                <h3>🐋 Бездна</h3>
+                <div class="price">$12.99 <small>/ мес</small></div>
+                <ul>
+                    <li><i class="fas fa-check-circle"></i> Неограниченно устройств</li>
+                    <li><i class="fas fa-check-circle"></i> Выделенный IP (в подарок)</li>
+                    <li><i class="fas fa-check-circle"></i> Приоритетная поддержка 24/7</li>
+                    <li><i class="fas fa-check-circle"></i> Двойной VPN (MultiHop)</li>
+                    <li><i class="fas fa-check-circle"></i> Доступ к Tor over VPN</li>
+                    <li><i class="fas fa-check-circle"></i> Персональный менеджер</li>
+                </ul>
+                <button class="btn-plan" onclick="alert('Оформление подписки Бездна — переход в защищённый биллинг.')">Окунуться</button>
+            </div>
+        </div>
+
+        <!-- Отзывы (для красоты) -->
+        <div class="section-title">
+            <h2>🌊 Волны доверия</h2>
+        </div>
+        <div class="testimonials">
+            <div class="testimonial">
+                <i class="fas fa-quote-right" style="font-size: 2.5rem; opacity:0.5;"></i>
+                <p>С Wave VPN я смотрю Netflix любой страны без лагов. Синий цвет успокаивает, скорость поражает!</p>
+                <div style="margin-top:20px;"><i class="fas fa-user-circle" style="font-size:2rem;"></i> Никита Волнов</div>
+            </div>
+            <div class="testimonial">
+                <i class="fas fa-quote-right" style="font-size: 2.5rem; opacity:0.5;"></i>
+                <p>Интерфейс как волна — всё плавно, легко, а главное — никаких следов. Лучший синий VPN.</p>
+                <div style="margin-top:20px;"><i class="fas fa-user-circle" style="font-size:2rem;"></i> Анна Кристальная</div>
+            </div>
+            <div class="testimonial">
+                <i class="fas fa-quote-right" style="font-size: 2.5rem; opacity:0.5;"></i>
+                <p>Серверы в Японии, Австралии — захожу везде. Бесплатной версии хватает за глаза!</p>
+                <div style="margin-top:20px;"><i class="fas fa-user-circle" style="font-size:2rem;"></i> Илья Кит</div>
+            </div>
+        </div>
+
+        <!-- Призыв -->
+        <div class="cta-big">
+            <h2>💙 Нырнуть в безопасность с Wave</h2>
+            <p style="font-size: 1.5rem;">Бесплатный вход для всех. Вечные волны — по подписке.</p>
+            <a href="https://github.com/wave-vpn/wave-releases/releases/latest" target="_blank" style="text-decoration: none;">
+                <button class="btn btn-primary" style="font-size: 1.6rem; padding: 18px 50px; margin-top: 20px;">
+                    <i class="fab fa-github"></i> Скачать Wave (Free)
+                </button>
+            </a>
+        </div>
+    </main>
+
+    <!-- Футер -->
+    <div class="container">
+        <footer class="footer">
+            <div>
+                <a href="#">Wave VPN</a>
+                <a href="#">Политика</a>
+                <a href="#">Условия</a>
+                <a href="#">Блог</a>
+            </div>
+            <div class="socials">
+                <i class="fab fa-telegram"></i>
+                <i class="fab fa-twitter"></i>
+                <i class="fab fa-github"></i>
+                <i class="fab fa-discord"></i>
+            </div>
+        </footer>
+        <p style="text-align: center; color: #3b6b95; padding: 20px 0;">© 2025 Wave VPN — чистый синий океан анонимности</p>
+    </div>
+
+    <script>
+        // Для красоты: добавим обработку нажатий на платные тарифы (можно заменить на реальные ссылки позже)
+        // Все кнопки уже имеют onclick, но продублируем для остальных.
+    </script>
+</body>
+</html>
